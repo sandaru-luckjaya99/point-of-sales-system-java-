@@ -1,37 +1,47 @@
 package Interfaces;
 
-import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class Controller {
 
-// containers of scene builder
-    public TextField username;
-    public PasswordField pwd;
+    @FXML
+    private PasswordField pwd;
 
-    // when the loggin button pressed
-    public void button(ActionEvent actionEvent) {
+    @FXML
+    private Button button;
 
-        // when the logging success
-        if (   pwd.getText().equals("database")  && username.getText().equals("Sandaru")  ){
+    @FXML
+    private TextField username;
+
+    @FXML
+    void goNext(MouseEvent event) throws IOException {
+        if (pwd.getText().equals("database") && username.getText().equals("Sandaru")){
 
 
+            Stage stage = (Stage) button.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("Interface 2.fxml"));
+            stage.setTitle("Logging");
+            stage.setScene(new Scene(root));
 
-        }
-
-        //when the login failed
-        else{
-
+        } else{
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Loging information");
-            alert.setHeaderText("plese try again");
-            alert.setContentText("The password or user name you entered is incorrect ");
+            alert.setHeaderText("Plese try againg");
+            alert.setContentText("The password or uder name incorrect");
             alert.showAndWait();
-
         }
 
-
     }
+
 }
