@@ -5,18 +5,21 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
 <SplitPane dividerPositions="0.5" maxHeight="800.0" maxWidth="1500.0" minHeight="800.0" minWidth="1500.0" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interfaces.Controller2">
   <items>
     <AnchorPane maxHeight="800.0" maxWidth="300.0" minHeight="800.0" minWidth="300.0" prefHeight="800.0" prefWidth="300.0" style="-fx-background-color: #023966;">
          <children>
-            <ImageView fitHeight="230.0" fitWidth="379.0" layoutX="6.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="441.0">
+            <ImageView fitHeight="230.0" fitWidth="300.0" layoutX="-1.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="446.0">
                <image>
                   <Image url="@14.07.2021_00.07.36_REC.png" />
                </image>
@@ -46,12 +49,12 @@
                   <Font size="23.0" />
                </font>
             </Button>
-            <Separator layoutX="2.0" layoutY="391.0" prefHeight="16.0" prefWidth="294.0" style="-fx-background-color: white;" />
+            <Separator layoutX="2.0" layoutY="391.0" prefHeight="14.0" prefWidth="294.0" style="-fx-background-color: gray;" />
          </children>
       </AnchorPane>
-    <AnchorPane maxHeight="800.0" maxWidth="1200.0" minHeight="800.0" minWidth="1200.0" prefHeight="800.0" prefWidth="1200.0">
+    <AnchorPane maxHeight="800.0" maxWidth="1200.0" minHeight="800.0" minWidth="1200.0" onMouseClicked="#addAll" prefHeight="800.0" prefWidth="1200.0">
          <children>
-            <Button layoutX="6.0" layoutY="57.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="623.0" style="-fx-background-image: D:\Campus\Subjects\SELECTED\2nd year\OOP\SYSTEM\untitled\src\Interfaces\.idea;" text="Start">
+            <Button fx:id="strt" layoutX="6.0" layoutY="57.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="623.0" style="-fx-background-image: D:\Campus\Subjects\SELECTED\2nd year\OOP\SYSTEM\untitled\src\Interfaces\.idea;" text="Start">
                <font>
                   <Font size="27.0" />
                </font>
@@ -66,8 +69,14 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <TextField layoutX="34.0" layoutY="176.0" prefHeight="50.0" prefWidth="149.0" />
-            <TextField layoutX="34.0" layoutY="283.0" prefHeight="50.0" prefWidth="149.0" />
+            <TextField fx:id="barcd" layoutX="34.0" layoutY="176.0" prefHeight="50.0" prefWidth="149.0">
+               <font>
+                  <Font size="26.0" />
+               </font></TextField>
+            <TextField fx:id="brnd" layoutX="34.0" layoutY="283.0" prefHeight="50.0" prefWidth="149.0">
+               <font>
+                  <Font size="26.0" />
+               </font></TextField>
             <Label layoutX="502.0" layoutY="133.0" prefHeight="36.0" prefWidth="106.0" text="Name">
                <font>
                   <Font size="22.0" />
@@ -78,7 +87,10 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <TextField layoutX="248.0" layoutY="176.0" prefHeight="50.0" prefWidth="149.0" />
+            <TextField fx:id="qty" layoutX="248.0" layoutY="176.0" prefHeight="50.0" prefWidth="149.0">
+               <font>
+                  <Font size="26.0" />
+               </font></TextField>
             <Label layoutX="89.0" layoutY="136.0" prefHeight="36.0" prefWidth="106.0" text="Bar Code ">
                <font>
                   <Font size="22.0" />
@@ -99,7 +111,10 @@
                   <Image url="@leaderboard.png" />
                </image>
             </ImageView>
-            <TextField layoutX="471.0" layoutY="172.0" prefHeight="50.0" prefWidth="150.0" />
+            <TextField fx:id="nme" layoutX="471.0" layoutY="172.0" prefHeight="50.0" prefWidth="150.0">
+               <font>
+                  <Font size="26.0" />
+               </font></TextField>
             <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="37.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@.idea/brand.png" />
@@ -107,7 +122,10 @@
             </ImageView>
             <Pane layoutX="233.0" layoutY="238.0" prefHeight="118.0" prefWidth="390.0" style="-fx-border-color: red;">
                <children>
-                  <TextField layoutX="18.0" layoutY="49.0" prefHeight="50.0" prefWidth="150.0" />
+                  <TextField fx:id="discnt" layoutX="18.0" layoutY="49.0" prefHeight="50.0" prefWidth="150.0">
+                     <font>
+                        <Font size="26.0" />
+                     </font></TextField>
                   <ImageView fitHeight="36.0" fitWidth="30.0" layoutX="32.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@.idea/1611255.png" />
@@ -125,18 +143,32 @@
                   </Button>
                </children>
             </Pane>
-            <Button layoutX="27.0" layoutY="364.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="273.0" style="-fx-background-image: D:\Campus\Subjects\SELECTED\2nd year\OOP\SYSTEM\untitled\src\Interfaces\.idea;" text="Add to list">
+            <Button fx:id="add" layoutX="27.0" layoutY="364.0" mnemonicParsing="false" onMouseClicked="#add" prefHeight="62.0" prefWidth="273.0" style="-fx-background-image: D:\Campus\Subjects\SELECTED\2nd year\OOP\SYSTEM\untitled\src\Interfaces\.idea;" text="Add to list">
                <font>
                   <Font size="28.0" />
                </font>
             </Button>
-            <Button layoutX="319.0" layoutY="364.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="293.0" style="-fx-background-image: D:\Campus\Subjects\SELECTED\2nd year\OOP\SYSTEM\untitled\src\Interfaces\.idea;" text="End business">
+            <Button fx:id="end" layoutX="319.0" layoutY="364.0" mnemonicParsing="false" onMouseClicked="#addAll" prefHeight="62.0" prefWidth="293.0" style="-fx-background-image: D:\Campus\Subjects\SELECTED\2nd year\OOP\SYSTEM\untitled\src\Interfaces\.idea;" text="End business">
                <font>
                   <Font size="29.0" />
                </font>
             </Button>
-            <Separator layoutX="633.0" orientation="VERTICAL" prefHeight="812.0" prefWidth="23.0" style="-fx-background-color: #023966;" />
-            <DatePicker layoutX="201.0" layoutY="541.0" prefHeight="93.0" prefWidth="175.0" promptText="calander" showWeekNumbers="true" style="-fx-background-color: red;" />
+            <Separator layoutX="633.0" orientation="VERTICAL" prefHeight="812.0" prefWidth="13.0" style="-fx-background-color: #023966;" />
+            <DatePicker layoutX="703.0" layoutY="70.0" prefHeight="102.0" prefWidth="126.0" promptText="calander" showWeekNumbers="true" style="-fx-background-color: red;" />
+            <TextFlow fx:id="txf" layoutX="728.0" layoutY="406.0" prefHeight="200.0" prefWidth="325.0" />
+            <TextField fx:id="price" layoutX="738.0" layoutY="257.0" prefHeight="198.0" prefWidth="326.0" text="aaaaaaaaaaaaaaaa">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </TextField>
+            <TableView fx:id="tableView" layoutX="27.0" layoutY="455.0" prefHeight="316.0" prefWidth="590.0">
+              <columns>
+                <TableColumn fx:id="barcode_column" prefWidth="160.79999351501465" text="Barcode" />
+                <TableColumn fx:id="quentity_column" prefWidth="101.60006713867188" text="Quentity" />
+                  <TableColumn fx:id="name_column" prefWidth="192.80001831054688" text="Name" />
+                  <TableColumn fx:id="price_column" prefWidth="137.5999755859375" text="price" />
+              </columns>
+            </TableView>
          </children></AnchorPane>
   </items>
 </SplitPane>
