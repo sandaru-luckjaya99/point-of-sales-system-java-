@@ -45,34 +45,14 @@
                   <Font size="27.0" />
                </font>
             </Button>
-            <Label layoutX="409.0" layoutY="576.0" prefHeight="36.0" prefWidth="106.0" text="Brand" textFill="#1b1a1a">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
             <TextField fx:id="unitp" layoutX="17.0" layoutY="612.0" prefHeight="50.0" prefWidth="149.0">
                <font>
                   <Font size="26.0" />
                </font></TextField>
-            <Label layoutX="219.0" layoutY="576.0" prefHeight="36.0" prefWidth="106.0" text="Name" textFill="#181818">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <Label layoutX="409.0" layoutY="464.0" prefHeight="36.0" prefWidth="106.0" text="Quentity" textFill="#101010">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
             <TextField fx:id="qty" layoutX="366.0" layoutY="511.0" prefHeight="50.0" prefWidth="149.0">
                <font>
                   <Font size="26.0" />
                </font></TextField>
-            <Label layoutX="60.0" layoutY="576.0" prefHeight="36.0" prefWidth="106.0" text="Unit price" textFill="#151515">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
             <ImageView fitHeight="36.0" fitWidth="43.0" layoutX="14.0" layoutY="471.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@barcode.png" />
@@ -108,16 +88,16 @@
                         <Image url="@1611255.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="69.0" layoutY="15.0" prefHeight="36.0" prefWidth="106.0" text="Discount" textFill="#151515">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Label>
                   <Button defaultButton="true" layoutX="195.0" layoutY="17.0" mnemonicParsing="false" prefHeight="84.0" prefWidth="182.0" text="Add discount">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
+                  <Label layoutX="55.0" layoutY="11.0" prefHeight="36.0" prefWidth="182.0" text="Discount " textFill="#181818">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
             <Button fx:id="add" defaultButton="true" layoutX="541.0" layoutY="460.0" mnemonicParsing="false" onMouseClicked="#add" prefHeight="326.0" prefWidth="78.0" style="-fx-background-image: D:\Campus\Subjects\SELECTED\2nd year\OOP\SYSTEM\untitled\src\Interfaces\.idea;" text="ADD" textOverrun="WORD_ELLIPSIS">
@@ -161,12 +141,7 @@
                   <Font size="26.0" />
                </font>
             </TextField>
-            <Label layoutX="53.0" layoutY="464.0" prefHeight="36.0" prefWidth="106.0" text="Barcode" textFill="#151515">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="36.0" fitWidth="43.0" layoutX="17.0" layoutY="576.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="36.0" fitWidth="43.0" layoutX="14.0" layoutY="576.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@tag.png" />
                </image>
@@ -176,21 +151,11 @@
                   <Image url="@list.png" />
                </image>
             </ImageView>
-            <Label layoutX="60.0" layoutY="95.0" prefHeight="36.0" prefWidth="106.0" text="LIST">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
             <ImageView fitHeight="36.0" fitWidth="43.0" layoutX="756.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@gross.png" />
                </image>
             </ImageView>
-            <Label layoutX="808.0" layoutY="113.0" prefHeight="36.0" prefWidth="182.0" text="Gross payment" textFill="#0d0d0d">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
             <Separator layoutX="659.0" orientation="VERTICAL" prefHeight="800.0" prefWidth="14.0" style="-fx-background-color: #023966;" />
             <TextField fx:id="price1" layoutX="718.0" layoutY="365.0" prefHeight="74.0" prefWidth="448.0">
                <font>
@@ -204,7 +169,7 @@
             </ImageView>
             <Label layoutX="814.0" layoutY="326.0" prefHeight="36.0" prefWidth="182.0" text="Discount total" textFill="#181818">
                <font>
-                  <Font size="22.0" />
+                  <Font name="System Bold" size="22.0" />
                </font>
             </Label>
             <Button layoutX="718.0" layoutY="603.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="272.0" text="Check empty stock">
@@ -227,11 +192,6 @@
                   <Font size="26.0" />
                </font>
             </TextField>
-            <Label layoutX="807.0" layoutY="453.0" prefHeight="36.0" prefWidth="182.0" text="Bill number" textFill="#1e1d1d">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
             <ImageView fitHeight="36.0" fitWidth="30.0" layoutX="759.0" layoutY="456.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@bill.png" />
@@ -248,8 +208,51 @@
                </image>
             </ImageView>
             <TextField layoutX="1016.0" layoutY="59.0" />
-            <Label layoutX="1016.0" layoutY="26.0" text="User" textFill="#0b0b0b" />
+            <Label layoutX="1016.0" layoutY="26.0" prefHeight="26.0" prefWidth="70.0" text="User" textAlignment="JUSTIFY" textFill="#0b0b0b">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font></Label>
             <Separator layoutX="2.0" layoutY="439.0" prefHeight="14.0" prefWidth="654.0" style="-fx-background-color: #023966;" />
+            <Label layoutX="814.0" layoutY="453.0" prefHeight="36.0" prefWidth="182.0" text="Bill number" textFill="#181818">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="806.0" layoutY="113.0" prefHeight="36.0" prefWidth="182.0" text="Total price" textFill="#181818">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="60.0" layoutY="95.0" prefHeight="36.0" prefWidth="182.0" text="List" textFill="#181818">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="60.0" layoutY="471.0" prefHeight="36.0" prefWidth="182.0" text="Bar code" textFill="#181818">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="409.0" layoutY="465.0" prefHeight="36.0" prefWidth="182.0" text="Quentity" textFill="#181818">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="50.0" layoutY="576.0" prefHeight="36.0" prefWidth="182.0" text="Unit price" textFill="#181818">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="219.0" layoutY="576.0" prefHeight="36.0" prefWidth="182.0" text="Name" textFill="#181818">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="409.0" layoutY="576.0" prefHeight="36.0" prefWidth="182.0" text="Brand" textFill="#181818">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
   </items>
 </SplitPane>
