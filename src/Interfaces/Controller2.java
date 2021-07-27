@@ -20,6 +20,7 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -31,6 +32,7 @@ public class Controller2 implements Initializable {
     public Label timer;
     public Button back;
     public TextField user;
+    public TextField billno_txt;
 
 
     @FXML
@@ -86,6 +88,11 @@ public class Controller2 implements Initializable {
     private int seconds;
 
 
+
+
+
+
+
     public void clock (){
 
         Date currentTime = new Date();
@@ -94,6 +101,58 @@ public class Controller2 implements Initializable {
         String formattedTimerStr = formatTime.format(currentTime);
 
         timer.setText(formattedTimerStr);
+
+    }
+
+
+
+    public void start(MouseEvent mouseEvent) {
+
+        // Arry list to store bill no
+        ArrayList<String> bill_list = new ArrayList<>();
+
+        clock();
+        LocalDate date = calender.getValue();
+        System.out.println(date);
+
+
+
+        connectioncls connectionCls = new connectioncls();
+        Connection connection = connectionCls.getConnection();
+
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT biln FROM billist ");
+            ResultSet bil_no = preparedStatement.executeQuery();
+
+            while ( bil_no.next()==true){
+                String bils = bil_no.getString(1);
+
+                bill_list.add(bils);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+        String bilno = bill_list.get( bill_list.size()-1 );
+        bilno = bilno + 1;
+
+        billno_txt.setText("BILNO "+bilno);
+
+
+
+
+
+
+
+
+
 
     }
 
@@ -112,20 +171,7 @@ public class Controller2 implements Initializable {
 
     );
 
-    public void start(MouseEvent mouseEvent) {
-        clock();
-        LocalDate date = calender.getValue();
-        System.out.println(date);
 
-//        Controller cont = new Controller().con();
-//        //String d = cont.us;
-//
-//        user.setText(cont.us);
-//        System.out.println(cont.us);
-
-
-
-    }
 
 
     public void add(MouseEvent mouseEvent) {
