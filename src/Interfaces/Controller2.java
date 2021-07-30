@@ -1,5 +1,6 @@
 package Interfaces;
 
+import com.sun.media.jfxmedia.events.NewFrameEvent;
 import com.sun.media.jfxmediaimpl.platform.Platform;
 import connection.connectioncls;
 import javafx.collections.FXCollections;
@@ -16,10 +17,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -29,11 +35,13 @@ public class Controller2 implements Initializable {
 
     public TextArea Tax;
     public DatePicker calender;
-    public Label timer;
+    //public Label timer;
     public Button back;
     public TextField user;
     public TextField billno_txt;
-
+    public TextField discnt_txt;
+    public TextField tot_disc_txt;
+    public Button get_barcode;
 
     @FXML
     private TableView<table_add_list> tableView;
@@ -49,6 +57,9 @@ public class Controller2 implements Initializable {
 
     @FXML
     private TableColumn<table_add_list, Double> price_column;
+
+    @FXML
+    private TableColumn<table_add_list, Double> discounted_column;
 
     @FXML
     private Button strt;
@@ -69,9 +80,6 @@ public class Controller2 implements Initializable {
     private TextField nme;
 
     @FXML
-    private TextField discnt;
-
-    @FXML
     private Button add;
 
     @FXML
@@ -79,50 +87,98 @@ public class Controller2 implements Initializable {
 
     @FXML
     private TextField price;
-    Double totalprice = Double.valueOf(0);
 
 
+    Double totalprice = Double.valueOf(0); // variable to store total value(not last total)
 
-    private int hours;
-    private int minutes;
-    private int seconds;
+    public String billstr; // variable to store bill numbers string part
+    public Integer bil_no;  // variable to store bill numbers int part
+    public Double discount; // variable to store discount
+    public String username; // variable to store user name
+
+    public Double total_discount = 0.0; // variable to store total discount
+    public Double gross_total = 0.0; // variable to store gross discount
+
+    public java.sql.Time localTime;
+    public java.sql.Date localDates;
+
+    // method to get date
+    public void date(){
+
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        localDates = java.sql.Date.valueOf(simpleDateFormat.format(new Date()));
+
+    }
 
 
-
-
-
-
-
+    // method get time
     public void clock (){
 
         Date currentTime = new Date();
         String formatTimestr = "hh:mm:ss";
         DateFormat formatTime = new SimpleDateFormat(formatTimestr);
-        String formattedTimerStr = formatTime.format(currentTime);
+        localTime = Time.valueOf(formatTime.format(currentTime));
 
-        timer.setText(formattedTimerStr);
+        //timer.setText(String.valueOf(localTime));
+
 
     }
 
-
-
+    // method to start button
     public void start(MouseEvent mouseEvent) {
+
+
+        // first of all clear all items of table
+        tableView.getItems().clear();
+        price.clear();
+        tot_disc_txt.clear();
+        billno_txt.clear();
+
+        // call time and date
+        clock();
+        date();
+
+//      sql connection
+        connectioncls connectionCls = new connectioncls();
+        Connection connection = connectionCls.getConnection();
+
+//      /************ get username  **********/
+
+        // array list to store
+
+        ArrayList<String> logged_list = new ArrayList<>();
+
+
+        try {
+
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT name FROM logged_user ");
+            ResultSet log_user = preparedStatement.executeQuery();
+
+            while ( log_user.next()==true){
+                String user = log_user.getString(1);
+                logged_list.add(user);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String users = logged_list.get( logged_list.size()-1);
+
+        user.setText(users);
+
+        username = user.getText();
 
         // Arry list to store bill no
         ArrayList<String> bill_list = new ArrayList<>();
 
-        clock();
-        LocalDate date = calender.getValue();
-        System.out.println(date);
-
-
-
-        connectioncls connectionCls = new connectioncls();
-        Connection connection = connectionCls.getConnection();
+;
 
         try {
 
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT biln FROM billist ");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT bill_no FROM billist ");
             ResultSet bil_no = preparedStatement.executeQuery();
 
             while ( bil_no.next()==true){
@@ -137,22 +193,13 @@ public class Controller2 implements Initializable {
         }
 
 
-
-
-
-        String bilno = bill_list.get( bill_list.size()-1 );
-        bilno = bilno + 1;
-
-        billno_txt.setText("BILNO "+bilno);
-
-
-
-
-
-
-
-
-
+        // Set current bill no and display
+        String bilno = bill_list.get( bill_list.size()-1);
+        System.out.println(bilno);
+        bil_no = Integer.valueOf(bilno);
+        bil_no = bil_no+1;
+        billstr = ("BILNO " + bil_no);
+        billno_txt.setText(billstr);
 
     }
 
@@ -162,7 +209,8 @@ public class Controller2 implements Initializable {
         name_column.setCellValueFactory(new PropertyValueFactory<>("name_column"));
         quentity_column.setCellValueFactory(new PropertyValueFactory<>("quentity_column"));
         price_column.setCellValueFactory(new PropertyValueFactory<>("price_column"));
-        //barcode_column.setCellValueFactory(new PropertyValueFactory<>("Barcode"));
+        discounted_column.setCellValueFactory(new PropertyValueFactory<>("discounted_column"));
+
         tableView.setItems(observableList);
 
 
@@ -171,24 +219,61 @@ public class Controller2 implements Initializable {
 
     );
 
+    // method to discount button
+    public void discount(MouseEvent mouseEvent) {
 
+        discount = Double.valueOf(discnt_txt.getText());
 
+    }
 
+    // method to add button
     public void add(MouseEvent mouseEvent) {
-        Double unitprice = Double.valueOf(unitp.getText());
-        Integer quentity = Integer.valueOf(qty.getText());
-        Double answer = unitprice * quentity;
 
-        totalprice = totalprice + answer;
-        table_add_list table_add_list = new table_add_list(barcd.getText(),nme.getText(), Integer.parseInt(qty.getText()), answer );
-        tableView.getItems().add(table_add_list);
+        if (discount == 0) {
+
+            System.out.println("ddd");
+
+            Double unitprice = Double.valueOf(unitp.getText());
+            Integer quentity = Integer.valueOf(qty.getText());
+            Double answer = unitprice * quentity;
+
+            totalprice = totalprice + answer;
+            Double discount = 0.0;
+
+            gross_total = gross_total + totalprice;
+
+            table_add_list table_add_list = new table_add_list(barcd.getText(),nme.getText(), Integer.parseInt(qty.getText()), answer, discount );
+            tableView.getItems().add(table_add_list);
+
+        }
+
+        else {
+            System.out.println("SSSS");
+
+            Double unitprice = Double.valueOf(unitp.getText());
+            Integer quentity = Integer.valueOf(qty.getText());
+            Double answer = unitprice * quentity;
+
+            gross_total = gross_total + answer;
+
+
+            Double disc = (answer/100) * discount;
+            Double discountss = answer - disc;
+
+            totalprice = totalprice + discountss;
+
+            total_discount = total_discount + discountss;
+
+            table_add_list table_add_list = new table_add_list(barcd.getText(), nme.getText(), Integer.parseInt(qty.getText()), answer, discountss);
+            tableView.getItems().add(table_add_list);
+        }
 
         unitp.clear();
         barcd.clear();
         brnd.clear();
         qty.clear();
         nme.clear();
-        discnt.clear();
+        discnt_txt.clear();
 
     }
 
@@ -217,7 +302,7 @@ public class Controller2 implements Initializable {
                 nme.setText(names);
                 brnd.setText(brands);
                 unitp.setText(String.valueOf(unitprices));
-                discnt.setText(discounts);
+                discnt_txt.setText(discounts);
 
             }
 
@@ -228,10 +313,32 @@ public class Controller2 implements Initializable {
     }
 
 
-    public void endtot(MouseEvent mouseEvent) {
+    public void endtot(MouseEvent mouseEvent) throws SQLException  {
 
+
+        // set totalprice to total field
         price.setText(String.valueOf(totalprice));
-//        tableView.getItems().clear();
+
+        // set billno to bill no field
+        billno_txt.setText(billstr);
+
+        // set total discount
+
+        tot_disc_txt.setText( "Gross total = "+ +gross_total +"  "+ "Total discount = " +"   "+total_discount );
+
+        // set billno to bill table(database)
+        connectioncls connectionCls = new connectioncls();
+        Connection connection = connectionCls.getConnection();
+
+        String pricess = price.getText();
+
+        Double prss = Double.valueOf(pricess);
+
+
+        String billns2 = " INSERT INTO `billist`(`bill_no`, `Time`,`Date`, `User`, `price`) VALUES ('"+bil_no+"','"+localTime+"', '"+ localDates +"',  '"+username+"','"+prss+"')";
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(billns2);
+
     }
 
 
@@ -244,7 +351,7 @@ public class Controller2 implements Initializable {
         brnd.clear();
         qty.clear();
         nme.clear();
-        discnt.clear();
+        discnt_txt.clear();
 
 
     }
@@ -259,6 +366,22 @@ public class Controller2 implements Initializable {
 
         stage.show();
         //stage.setResizable(true);
+
+    }
+
+
+    public void get_barcode(MouseEvent mouseEvent) throws IOException {
+
+
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Interface 5.fxml"));
+        Parent root2 = (Parent)  fxmlLoader.load();
+        Stage stage = new Stage();get_barcode.getScene().getWindow();
+        stage.setTitle("Barcode list");
+        stage.setScene(new Scene(root2));
+        stage.show();
+        //stage.setMaximized(true);
+
 
     }
 }
