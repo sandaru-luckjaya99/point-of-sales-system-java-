@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #023966;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interfaces.Controller3">
+   <children>
+      <TableView layoutX="18.0" layoutY="86.0" prefHeight="298.0" prefWidth="562.0">
+        <columns>
+          <TableColumn prefWidth="188.0" text="Instrument name" />
+            <TableColumn prefWidth="208.0" text="Brand" />
+            <TableColumn prefWidth="173.60003662109375" text="Barcode" />
+        </columns>
+      </TableView>
+      <ImageView fitHeight="78.0" fitWidth="157.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@14.07.2021_00.07.36_REC.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="112.0" layoutY="27.0" prefHeight="18.0" prefWidth="176.0" text="Barcode list" textFill="#ead435">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
